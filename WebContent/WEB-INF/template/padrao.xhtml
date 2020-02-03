@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<h:head>
+		<title>Template Base</title>
+		<meta charset="utf-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+		<meta name="apple-mobile-web-app-capable" content="yes"/>
+		<meta name="mobile-web-app-capable" content="yes"/>
+		<link rel="shortcut icon" type="image/x-icon" href="#{resource['img/favicon.ico']}"/>
+    </h:head>
+    
+    <script type="text/javascript">
+	    PrimeFaces.locales['pt_BR'] = {
+	        closeText : 'Fechar',
+	        prevText : 'Anterior',
+	        nextText : 'Próximo',
+	        currentText : 'Começo',
+	        monthNames : [ 'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 
+	                       'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro','Dezembro' ],	                
+	        monthNamesShort : [ 'Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 
+	        	                'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez' ],
+	        dayNames : [ 'Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta',
+	                'Sexta', 'Sábado' ],
+	        dayNamesShort : [ 'Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb' ],
+	        dayNamesMin : [ 'D', 'S', 'T', 'Q', 'Q', 'S', 'S' ],
+	        weekHeader : 'Semana',
+	        firstDay : 0,
+	        isRTL : false,
+	        showMonthAfterYear : false,
+	        yearSuffix : '',
+	        timeOnlyTitle : 'Só Horas',
+	        timeText : 'Tempo',
+	        hourText : 'Hora',
+	        minuteText : 'Minuto',
+	        secondText : 'Segundo',
+	        ampm : false,
+	        month : 'Mês',
+	        week : 'Semana',
+	        day : 'Dia',
+	        allDayText : 'Todo o Dia'
+	    };
+	</script>
+    
+    <style type="text/css">
+        #layout-menu_menu {
+            z-index: 9997!important;
+        }
+        #layout-menu_menu span.ui-menuitem-text {
+            margin-left: 2px;
+        }
+        #userImage {
+		    float: left;
+		    width: 25px;
+		    height: 25px;
+		    border-radius: 50%;
+		    margin-right: 10px;
+		    margin-top: -2px;
+		}
+		div.ui-growl {
+		    padding: 0 0 0 0;
+		    width: 40%;
+		    min-width: 120px;
+		    position: fixed;
+		    left: 38%;
+		    opacity: .95;
+		    font-size: 1.2em;
+		    text-align: center;
+		    font-weight: 500;
+		    z-index: 9999 !important;
+		}
+    </style>
+
+	<h:body styleClass="skin-blue sidebar-mini">
+
+		<p:ajaxStatus onstart="showBar();" onsuccess="hideBar();"/>
+
+        <p:dialog id="adminStatusDialog" modal="true" widgetVar="statusDialog" draggable="false" closable="false"
+				resizable="false" responsive="true" showHeader="false" appendTo="@(body)">
+            <p:graphicImage library="img" name="ajaxloadingbar.gif"/>
+        </p:dialog>
+
+        <div class="wrapper">
+
+            <div id="loader" class="load-bar" style="display: none">
+				<div class="bar"></div>
+				<div class="bar"></div>
+				<div class="bar"></div>
+			</div>
+
+			<header class="main-header">
+				
+				<p:link outcome="/pages/inicio" class="logo">
+					<span class="logo-mini">
+						TB
+					</span>
+					<span class="logo-lg">
+						Template Base
+					</span>					
+				</p:link>
+
+				<nav class="navbar navbar-static-top">
+					<a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+						<span class="sr-only"></span>
+					</a>
+					<div class="navbar-custom-menu">
+						<ul class="nav navbar-nav">
+					        <li class="dropdown user user-menu">
+					            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+					                <p:graphicImage id="userImage" name="profile4.png" library="img"/>
+					                <span class="hidden-xs"><h:outputText value="#{sessaoDoUsuario.pessoaLogada.email}"/></span>
+					            </a>
+					            <ul class="dropdown-menu">
+					                <li class="user-header">
+					                    <div class="hidden-xs">
+					                    	<p:graphicImage name="profile4.png" library="img" 
+					                    			style="border-radius: 50%;width: 80px; height: 80px;"/>
+										</div>
+										<p>
+											<h:outputText value="#{sessaoDoUsuario.pessoaLogada.nomeCompleto}"/>
+											<small><h:outputText value="Perfil: Teste"/></small>
+											<small><h:outputText value="Empresa: Teste"/></small>
+										</p>
+									</li>
+									<li class="user-footer">
+										<h:form prependId="false">
+											<div class="pull-right">
+												<p:commandLink styleClass="btn btn-teal" title="Logoff"
+														action="#{sessaoDoUsuario.deslogar()}" value="Sair"/>
+											</div>
+										</h:form>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+					<div class="center-navbar"></div>
+				</nav>
+
+			</header>
+
+            <!-- Menu da esquerda -->
+			<aside id="sidebar" class="main-sidebar slideout-menu">
+				<section class="sidebar">
+					<ul class="sidebar-menu">
+						<li class="header">
+							Cadastros
+						</li>
+						<li>
+							<p:link outcome="/login">
+								<i class="fa fa-address-card"></i>
+								<span>Modelo</span>
+							</p:link>
+						</li>
+					</ul>
+				</section>
+			</aside>
+
+            <!-- Conteúdo -->
+			<div id="content" class="content-wrapper">
+
+				<section class="content-header">
+					<h1>
+						<ui:insert name="title">
+							<h:outputText value="Título da Página"/>
+						</ui:insert>
+					</h1>
+				</section>
+
+				<section class="content">
+
+					<ui:fragment>
+						<div class="row">
+							<div class="col-sm-12">
+								<p:growl showDetail="false" life="5000" severity="info" escape="false"
+										style="white-space: pre-wrap;word-wrap: break-word;">
+									<p:autoUpdate/>
+								</p:growl>
+                				<p:growl showDetail="false" sticky="true" severity="warn,error,fatal" escape="false"
+                						style="white-space: pre-wrap;word-wrap: break-word; ">
+                					<p:autoUpdate/>
+                				</p:growl>
+							</div>
+						</div>
+					</ui:fragment>
+
+					<ui:insert name="body"/>
+
+				</section>
+
+			</div>
+
+			<footer class="main-footer">
+				Copyright (C) 2020 - Fysout Consultoria
+			</footer>
+
+		</div>			
+
+		<script type="text/javascript">
+            if (isMobile()) {
+                window.onscroll = activateScrollToTop;
+            }
+		</script>
+
+		<h:outputScript library="primefaces" name="jquery/jquery.js" target="head"/>
+		<h:outputScript library="js" name="bootstrap.min.js" target="head"/>
+		<h:outputScript library="js" name="admin-lte.min.js" target="head"/>
+		<h:outputScript library="js" name="admintemplate.js" target="head"/>
+		<h:outputScript library="js" name="slideout.min.js"/>
+		<h:outputScript library="js" name="adminslide.js"/>
+		<h:outputScript library="js" name="control-sidebar.js" target="head"/>
+		<h:outputScript library="js" name="simple-mask-money.js" target="head"/>
+		<h:outputScript library="js" name="lanchenet.js" target="head"/>
+
+		<ui:fragment>
+			<script type="text/javascript">
+				$(document).ready(function () {
+					$('.slideout-menu').removeClass('slideout-menu');
+					$('.slideout-panel').removeClass('slideout-panel');
+				});
+			</script>
+		</ui:fragment>
+
+		<ui:fragment>
+			<script type="text/javascript">
+				$(window).scroll(function () {
+					if (isMobile()) {
+						var minScrollTimeNav = 300;
+						var now = new Date().getTime();
+						if (!scrollTimerNav) {
+							if (now - lastScrollFireTimeNav > (3 * minScrollTimeNav)) {
+								activateAutoShowNavbarOnScrollUp();
+								lastScrollFireTimeNav = now;
+							}
+							scrollTimerNav = setTimeout(function () {
+								scrollTimerNav = null;
+								lastScrollFireTimeNav = new Date().getTime();
+								activateAutoShowNavbarOnScrollUp();
+							}, minScrollTimeNav);
+						}
+					}
+				});
+			</script>
+		</ui:fragment>
+
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="box-solid box-danger">
+			<p:commandButton value="Sim" type="button" icon="fa fa-check" 
+					styleClass="btn-material btn-primary ui-confirmdialog-yes"/>
+			<p:commandButton value="Não" type="button" icon="fa fa-close" 
+					styleClass="btn-material btn-danger ui-confirmdialog-no"/>
+		</p:confirmDialog>
+
+	</h:body>
+
+</html>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+	<h:head>
+		<title>Template Base</title>
+		<meta charset="utf-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+		<meta name="mobile-web-app-capable" content="yes"/>
+		<link rel="shortcut icon" type="image/x-icon" href="#{resource['img/favicon.ico']}"/>
+		<h:outputStylesheet library="css" name="prism.css"/>
+        
+		<meta name="theme-color" content="#444"/>
+
+		<style type="text/css">
+			body{
+				background-color: #ecf0f5;
+				line-height: 1.42857143;
+				color: #333;
+			}			
+		</style>
+	</h:head>
+
+	<h:body>
+			
+		<div class="error-content" style="width: 50%; margin: 10% auto;">
+            <div class="box box-solid box-danger">
+                <div class="box-header with-border" style="padding-top: 1px">
+                    <h1>Sessão Expirada</h1>
+                </div>
+                <div class="box-body" style="text-align: center;">
+                    <h4>Sua sessão expirou! As sessões expiram após 30 minutos por questões de segurança</h4>
+                    <h5>Clique <p:link style="text-decoration: underline" 
+                    		href="/login.xhtml" value="aqui" escape="false"/> para voltar ao login</h5>
+                </div>
+            </div>
+        </div>
+
+	</h:body>
+
+</html>

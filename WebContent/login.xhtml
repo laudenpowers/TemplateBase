@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:adm="http://github.com/adminfaces"
+      xmlns:p="http://primefaces.org/ui">
+
+	<h:head>
+		<title>Template Base</title>
+		<meta charset="utf-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+		<meta name="mobile-web-app-capable" content="yes"/>
+		
+		<link rel="shortcut icon" type="image/x-icon" href="#{resource['img/favicon.ico']}"/>
+		
+		<h:outputStylesheet library="css" name="prism.css"/>		
+        
+		<meta name="theme-color" content="#444"/>
+
+		<style type="text/css">
+
+            @media (max-width: 768px){               
+				body div.ui-growl {
+					display: none;
+				}
+				body div.ui-messages {
+					display: block;
+				}
+            }
+
+			@media (min-width: 769px){
+				body div.ui-growl {
+					display: block;
+				}
+				body div.ui-messages {
+					display: none;
+				}
+			}
+
+			body.login-page {
+				background-color: #ecf0f5;
+			}
+
+		</style>
+	</h:head>
+
+	<h:body styleClass="login-page">
+		<p:growl sticky="true">
+			<p:autoUpdate/>
+		</p:growl>
+		<div id="loader" class="load-bar" style="display: none">
+			<div class="bar"></div>
+			<div class="bar"></div>
+			<div class="bar"></div>
+		</div>	
+
+		<p:ajaxStatus onstart="showBar();" onsuccess="hideBar();"/>
+
+		<p:dialog id="adminStatusDialog" modal="true" widgetVar="statusDialog" draggable="false" closable="false"
+				resizable="false" responsive="true" showHeader="false" appendTo="@(body)">
+            <p:graphicImage library="img" name="ajaxloadingbar.gif"/>
+        </p:dialog>
+
+		<div class="login-box">
+
+			<div class="login-logo">Template Base</div>
+
+            <div class="box login-box-body">
+
+                <h:form>
+
+					<p class="login-box-msg">Realize o login para acessar a área privada</p>
+
+					<p:messages closable="true"/>
+
+					<div class="form-group has-feedback">
+						<p:inputText value="#{login.login}" 
+								styleClass="form-control" placeholder="Login" 
+								autocomplete="off"/>
+                        <i class="fa fa-user form-control-feedback"></i>
+                    </div>
+
+                    <div class="form-group has-feedback">                        	
+                    	<p:inputText value="#{login.senha}" styleClass="form-control"
+								placeholder="Senha" autocomplete="off" type="password"/>
+                        <i class="fa fa-lock form-control-feedback" style="font-size: 18px" ></i>
+                    </div>
+
+					<div class="row">
+						<p:spacer height="10"/>
+						<div class="col-xs-12">
+							<p:commandButton styleClass="btn btn-success btn-block"
+									icon="fa fa-sign-in" iconPos="right" value="Logar"
+									action="#{login.logar()}" process="@form" update="@form"/>
+						</div>
+					</div>
+
+				</h:form>
+
+			</div>
+
+		</div>
+
+		<h:outputScript library="js" name="prism.js"  target="head"/>
+
+        <h:outputScript library="js" name="admintemplate.js"  target="head"/>
+
+	</h:body>
+
+</html>
