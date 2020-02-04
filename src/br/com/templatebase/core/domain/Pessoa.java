@@ -22,6 +22,14 @@ public class Pessoa implements Serializable{
 		this.email = email;
 	}
 
+	public Integer getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(Integer codigo) {
+		this.codigo = codigo;
+	}
+
 	public String getNomeCompleto() {
 		return nomeCompleto;
 	}
@@ -36,10 +44,6 @@ public class Pessoa implements Serializable{
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public Integer getCodigo() {
-		return codigo;
 	}
 
 	@Override
