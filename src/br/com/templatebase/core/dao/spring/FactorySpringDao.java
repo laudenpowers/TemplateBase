@@ -9,6 +9,7 @@ import javax.sql.DataSource;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import br.com.templatebase.core.dao.IDaoMotorista;
 import br.com.templatebase.core.dao.IDaoPessoa;
 
 public class FactorySpringDao implements Serializable{
@@ -25,7 +26,11 @@ public class FactorySpringDao implements Serializable{
 	
 	public IDaoPessoa getDaoPessoa(){
 		return (IDaoPessoa)context.getBean("daoPessoa");
-	}	
+	}
+	
+	public IDaoMotorista getDaoMotorista() {
+		return (IDaoMotorista)context.getBean("daoMotorista");
+	}
 	
 	public Connection getConexaoDoBD(){
 		try {
