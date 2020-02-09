@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:of="http://omnifaces.org/functions"
+                template="/WEB-INF/template/padrao.xhtml">
+	
+	<ui:define name="title">
+		<p:outputPanel id="pnlSubtitulo">
+			<h:outputText value="Gerenciar Ramos"/>
+			<small>#{gerenciarRamo.subtitulo}</small>
+		</p:outputPanel>    
+	</ui:define>
+
+	<ui:define name="body">
+
+		<p:panel styleClass="box-primary">
+
+			<div class="text-right">
+				<p:commandButton value="Adicionar Novo Valor" icon="fa fa-plus" 
+						styleClass="btn-primary btn-sm" actionListener="#{gerenciarRamo.colocarEmModoDeCadastro()}"
+						update="pnlSubtitulo, pnlGerenciarRamo"/>
+				<p:commandButton value="Localizar Valor Existente" icon="fa fa-search" 
+						styleClass="btn-primary btn-sm" actionListener="#{gerenciarRamo.colocarEmModoDePesquisa()}"
+						update="pnlSubtitulo, pnlGerenciarRamo"/>
+			</div>
+
+			<p:separator/>
+
+			<p:outputPanel id="pnlGerenciarRamo">
+
+				<p:outputPanel rendered="#{gerenciarRamo.modoCadastro}">
+					<h:form id="frmGerenciarRamo">
+
+						<div class="ui-g ui-fluid ui-flat" style="margin: auto; width: 70%">
+
+							<div class="ui-g-12 ui-sm-12">
+								<div class="ui-g-12">
+									<p:outputLabel for="edtNome" value="Nome do Ramo*"/>
+								</div>
+								<div class="ui-g-12">
+									<p:inputText id="edtNome" value="#{gerenciarRamo.ramo.nome}"/>
+								</div>
+							</div>
+							
+		                    <p:spacer height="20px"/>						
+
+						</div>
+						
+						<div class="text-right">
+							<p:commandButton value="Salvar" icon="fa fa-save" styleClass="btn-success btn-sm"
+									actionListener="#{gerenciarRamo.salvar()}" update=":frmGerenciarRamo"/>
+						</div>
+
+					</h:form>
+				</p:outputPanel>
+
+				<p:outputPanel rendered="#{not gerenciarRamo.modoCadastro}">
+
+					<h:form id="frmPesquisarRamo">
+						<div class="ui-g ui-fluid ui-flat" style="margin: auto; width: 70%">
+						
+				            <div class="ui-g-12 ui-sm-12">
+				           		<div class="ui-g-12">
+									<p:outputLabel for="edtParamRamo" value="Nome do Ramo"/>
+								</div>
+				                <div class="ui-g-12 ui-inputgroup">
+
+				                    <p:inputText id="edtParamRamo" placeholder="Digite o nome ou o identificador do Ramo"
+				                    	value="#{gerenciarRamo.nomeParaBusca}"/>
+
+				                    <p:commandButton styleClass="btn-primary" icon="fa fa-filter" value="Listar"
+				                    	actionListener="#{gerenciarRamo.pesquisar()}" update="dtRamos"/>
+
+				                </div>
+				            </div>						
+
+				        </div>
+				        
+				        <p:dataTable var="ramo" value="#{gerenciarRamo.ramosEncontrados}" rows="10" 
+									paginatorPosition="bottom" paginator="true" id="dtRamos"
+									emptyMessage="Não existem ramos cadastrados"
+									paginatorTemplate="{FirstPageLink} {PreviousPageLink} 
+										               {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+							
+							<f:facet name="header">Ramos Cadastrados</f:facet>
+							
+							<p:column headerText="Código" style="width:15%; text-align: center;">
+							    <h:outputText value="#{ramo.codigo}" />
+							</p:column>
+							 
+							<p:column headerText="Nome" style="text-align: left;">
+							    <h:outputText value="#{ramo.nome}" />
+							</p:column>								
+							
+							<p:column headerText="Ações" style="width:10%; text-align: center;">
+							    <p:commandButton icon="fa fa-edit" styleClass="btn-warning btn-xs"
+							    		actionListener="#{gerenciarRamo.colocarEmModoDeEdicao(ramo)}"
+							    		update="pnlGerenciarRamo" title="Editar" process="@form"/>
+							    <p:commandButton icon="fa fa-trash" styleClass="btn-fatal btn-xs"
+							    		actionListener="#{gerenciarRamo.remover(ramo)}"
+							    		update="pnlGerenciarRamo" title="Remover">
+							    	<p:confirm header="Confirmação" message="Deseja realmente remover?" icon="ui-icon-alert"/>
+							    </p:commandButton>
+							</p:column>
+								
+						</p:dataTable>
+					
+					</h:form>
+
+				</p:outputPanel>
+
+			</p:outputPanel>
+
+        </p:panel>
+
+    </ui:define>
+
+</ui:composition>

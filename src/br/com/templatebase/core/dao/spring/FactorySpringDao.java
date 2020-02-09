@@ -10,6 +10,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import br.com.templatebase.core.dao.IDaoPessoa;
+import br.com.templatebase.core.dao.IDaoRamo;
 
 public class FactorySpringDao implements Serializable{
 
@@ -26,6 +27,10 @@ public class FactorySpringDao implements Serializable{
 	public IDaoPessoa getDaoPessoa(){
 		return (IDaoPessoa)context.getBean("daoPessoa");
 	}	
+	
+	public IDaoRamo getDaoRamo(){
+		return (IDaoRamo)context.getBean("daoRamo");
+	}
 	
 	public Connection getConexaoDoBD(){
 		try {
