@@ -10,7 +10,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import br.com.templatebase.core.dao.IDaoMotorista;
 import br.com.templatebase.core.dao.spring.FactorySpringDao;
-import br.com.templatebase.core.domain.CategoriaCarteira;
+import br.com.templatebase.core.dao.spring.rowmapper.MotoristaRowMapper;
 import br.com.templatebase.core.domain.Motorista;
 
 public class DaoMotorista implements IDaoMotorista {
@@ -23,8 +23,11 @@ public class DaoMotorista implements IDaoMotorista {
 
 	public static void main(String[] args) {
 		IDaoMotorista daoMotorista = FactorySpringDao.getInstance().getDaoMotorista();
-		daoMotorista.inserir(new Motorista("666", "Laudelino", CategoriaCarteira.B));
-		System.out.println("Salvou");
+		//daoMotorista.inserir(new Motorista("666", "Laudelino", CategoriaCarteira.B));
+		//System.out.println("Salvou");
+		List<Motorista> motoristas = daoMotorista.listarPor("");
+		
+		System.out.println(motoristas.get(0).getCategoriaCarteira());
 	}
 	
 	@Override
@@ -59,7 +62,17 @@ public class DaoMotorista implements IDaoMotorista {
 
 	@Override
 	public List<Motorista> listarPor(String nome) {
-		return null;
+		StringBuilder sqlListar = new StringBuilder();
+		sqlListar.append("SELECT matricula,nome,categoriacarteira ");
+		sqlListar.append("FROM motorista  ");
+		sqlListar.append("WHERE UPPER(nome) LIKE UPPER(:nome) ");	
+		
+		Map <String,Object> paramsListar = new HashMap<String, Object>();
+		paramsListar.put("nome", "%" + nome + "%");
+		
+		return new NamedParameterJdbcTemplate(dataSource).query(
+				sqlListar.toString(),paramsListar, new MotoristaRowMapper());
+		
 	}
 
 }
