@@ -29,29 +29,35 @@ public class GerenciarMotoristaBack implements Serializable{
 	
 	private String paramNome;
 	
+	private String subtitulo;
+	
 	@PostConstruct
 	public void inicializar() {
 		this.motorista = new Motorista();
 		this.motoristas = new ArrayList<Motorista>();
-		this.motoristaService = new MotoristaService();				
+		this.motoristaService = new MotoristaService();
+		this.subtitulo = "Listagem";
 	}
 	
 	public void colocarEmModoDeCadastro() {
 		this.isEmModoDeCadastro = true;
 		this.motorista = new Motorista();
 		this.motoristas = new ArrayList<Motorista>();
+		this.subtitulo = "Cadastro";
 	}
 	
 	public void colocarEmModoDeListagem() {
 		this.isEmModoDeCadastro = false;
 		this.motorista = new Motorista();
 		this.motoristas = new ArrayList<Motorista>();
+		this.subtitulo = "Listagem";
 	}
 	
 	public void colocarEmModoDeEdicao(Motorista motorista) {
 		this.isEmModoDeCadastro = true;
 		this.motorista = motorista;
 		this.motoristas = new ArrayList<Motorista>();
+		this.subtitulo = "Edição";
 	}
 	
 	public void salvar() {
@@ -101,6 +107,12 @@ public class GerenciarMotoristaBack implements Serializable{
 
 	public void setParamNome(String paramNome) {
 		this.paramNome = paramNome;
+	}
+
+	public String getSubtitulo() {
+		return subtitulo;
 	}		
+	
+	
 
 }
